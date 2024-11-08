@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - Inventory System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fc;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background-color: #34495e;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo h2 {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .nav-links li a:hover {
+            background-color: #1abc9c;
+            transform: scale(1.1);
+        }
+
+        /* Main Container */
+        .container {
+            padding: 40px;
+        }
+
+        .container h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        /* Order Management Sections */
+        .section {
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            color: #1abc9c;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .order-table th, .order-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #2c3e50;
+        }
+
+        .order-table th {
+            background-color: #f4f7fc;
+            font-weight: 700;
+        }
+
+        .order-actions button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .order-actions button:hover {
+            background-color: #16a085;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <h2>Inventory System</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="product-list.html">Products</a></li>
+            <li><a href="add-product.html">Add Product</a></li>
+            <li><a href="sales.html">Sales</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="order-management.html">Order Management</a></li>
+            <li><a href="supplier-management.html">Supplier & Vendor</a></li>
+        </ul>
+    </nav>
+
+    <!-- Order Management Container -->
+    <div class="container">
+        <h1>Order Management</h1>
+
+        <!-- Order Processing Section -->
+        <div class="section">
+            <h2>Order Processing</h2>
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1001</td>
+                        <td>Product A</td>
+                        <td>50</td>
+                        <td>Pending</td>
+                        <td>2024-11-01</td>
+                        <td class="order-actions">
+                            <button>Mark as Shipped</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1002</td>
+                        <td>Product B</td>
+                        <td>30</td>
+                        <td>Shipped</td>
+                        <td>2024-11-03</td>
+                        <td class="order-actions">
+                            <button disabled>Shipped</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Backorder Management Section -->
+        <div class="section">
+            <h2>Backorder Management</h2>
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Backorder ID</th>
+                        <th>Product</th>
+                        <th>Pending Quantity</th>
+                        <th>Status</th>
+                        <th>Expected Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#2001</td>
+                        <td>Product C</td>
+                        <td>20</td>
+                        <td>Pending</td>
+                        <td>2024-12-01</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sales Order Management Section -->
+        <div class="section">
+            <h2>Sales Order Management</h2>
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Sales Order ID</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#3001</td>
+                        <td>Customer X</td>
+                        <td>Product D</td>
+                        <td>15</td>
+                        <td>$450</td>
+                        <td>Confirmed</td>
+                        <td class="order-actions">
+                            <button>Process</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+<body>
+
+    <h2>Add Product</h2>
+
+    <!-- Form for adding a product -->
+    <form id="addProductForm">
+        <label for="productName">Product Name</label>
+        <input type="text" id="productName" placeholder="Enter product name" required>
+
+        <label for="category">Category</label>
+        <input type="text" id="category" placeholder="Enter category" required>
+
+        <label for="price">Price</label>
+        <input type="number" id="price" placeholder="Enter price" required>
+
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" placeholder="Enter quantity" required>
+
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Enter description" required></textarea>
+
+        <button type="button" onclick="addProduct()">Add Product</button>
+    </form>
+
+    <script>
+        // Function to send data to the backend
+        async function addProduct() {
+            // Collect form data
+            const productName = document.getElementById('productName').value;
+            const category = document.getElementById('category').value;
+            const price = parseFloat(document.getElementById('price').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const description = document.getElementById('description').value;
+
+            // Create the product object
+            const productData = {
+                productName,
+                category,
+                price,
+                quantity,
+                description
+            };
+
+            try {
+                // Send POST request to the backend
+                const response = await fetch('http://localhost:5000/api/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(productData)
+                });
+
+                // Parse the response
+                const result = await response.json();
+
+                // Display success or error message
+                if (response.ok) {
+                    alert(result.message); // Expected "Product added successfully"
+                } else {
+                    alert(result.error || "Failed to add product");
+                }
+
+            } catch (error) {
+                console.error("Error adding product:", error);
+                alert("Failed to connect to the server.");
+            }
+        }
+    </script>
+</body>
+</html>

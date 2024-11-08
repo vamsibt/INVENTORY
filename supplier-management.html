@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier & Vendor Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fc;
+            color: #2c3e50;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background-color: #34495e;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo h2 {
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-links li a:hover {
+            background-color: #1abc9c;
+            border-radius: 5px;
+        }
+
+        /* Main Container */
+        .container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .container h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        /* Supplier Sections */
+        .section {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section h2 {
+            font-size: 24px;
+            color: #1abc9c;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        .action-btn {
+            background-color: #1abc9c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .action-btn:hover {
+            background-color: #16a085;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #2c3e50;
+        }
+
+        .data-table th {
+            background-color: #f4f7fc;
+            font-weight: 700;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .section {
+                padding: 15px;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <h2>Inventory System</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="product-list.html">Products</a></li>
+            <li><a href="add-product.html">Add Product</a></li>
+            
+            <li><a href="sales.html">Sales</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="order-management.html">Order Management</a></li>
+            <li><a href="supplier-management.html">Supplier & Vendor</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Supplier & Vendor Management</h1>
+
+        <!-- Supplier Database Section -->
+        <div class="section">
+            <h2>Supplier Database</h2>
+            <p>Maintain a database of all suppliers and vendors, along with contact details and preferred products.</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Supplier ID</th>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Location</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#S1001</td>
+                        <td>Global Supplies Ltd.</td>
+                        <td>+1 234 567 890</td>
+                        <td>New York, USA</td>
+                        <td><button class="action-btn">View</button></td>
+                    </tr>
+                    <tr>
+                        <td>#S1002</td>
+                        <td>Eco Goods Inc.</td>
+                        <td>+44 789 654 321</td>
+                        <td>London, UK</td>
+                        <td><button class="action-btn">View</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Performance Tracking Section -->
+        <div class="section">
+            <h2>Performance Tracking</h2>
+            <p>Evaluate supplier performance based on delivery times, product quality, and adherence to contracts.</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Supplier</th>
+                        <th>On-Time Deliveries</th>
+                        <th>Quality Rating</th>
+                        <th>Contract Adherence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Global Supplies Ltd.</td>
+                        <td>95%</td>
+                        <td>4.5/5</td>
+                        <td>Excellent</td>
+                    </tr>
+                    <tr>
+                        <td>Eco Goods Inc.</td>
+                        <td>90%</td>
+                        <td>4.3/5</td>
+                        <td>Good</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Purchase Orders Section -->
+        <div class="section">
+            <h2>Purchase Orders</h2>
+            <p>Generate and manage purchase orders, with the ability to send them directly to suppliers.</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Supplier</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#PO1001</td>
+                        <td>Global Supplies Ltd.</td>
+                        <td>Product A</td>
+                        <td>100</td>
+                        <td>Pending</td>
+                        <td><button class="action-btn">Send Order</button></td>
+                    </tr>
+                    <tr>
+                        <td>#PO1002</td>
+                        <td>Eco Goods Inc.</td>
+                        <td>Product B</td>
+                        <td>50</td>
+                        <td>Shipped</td>
+                        <td><button class="action-btn" disabled>Shipped</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

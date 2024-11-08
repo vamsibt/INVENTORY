@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch/Expiry Management - Inventory Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background-color: #f8fafc;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background-color: #34495e;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        .navbar h2 {
+            color: white;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .expiry-table-container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .expiry-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .expiry-table thead {
+            background-color: #1abc9c;
+            color: white;
+        }
+        .expiry-table th, .expiry-table td {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+        .near-expiry {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .expired {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h2>Inventory Management</h2>
+        <div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="stock-monitoring.html">Stock Monitoring</a>
+            <a href="barcode-scanning.html">Barcode Scanning</a>
+            <a href="batch-expiry.html">Batch/Expiry Management</a>
+        </div>
+    </nav>
+
+    <div class="expiry-table-container">
+        <h3>Batch/Expiry Management</h3>
+        <p>Manage items based on their batch numbers and expiry dates.</p>
+        <table class="expiry-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>SKU</th>
+                    <th>Batch Number</th>
+                    <th>Expiry Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Product A</td>
+                    <td>SKU101</td>
+                    <td>BATCH1234</td>
+                    <td>2024-12-15</td>
+                    <td>In Stock</td>
+                </tr>
+                <tr class="near-expiry">
+                    <td>Product B</td>
+                    <td>SKU102</td>
+                    <td>BATCH5678</td>
+                    <td>2024-11-10</td>
+                    <td>Near Expiry</td>
+                </tr>
+                <tr class="expired">
+                    <td>Product C</td>
+                    <td>SKU103</td>
+                    <td>BATCH9101</td>
+                    <td>2023-09-12</td>
+                    <td>Expired</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

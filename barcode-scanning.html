@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanning - Inventory Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background-color: #f8fafc;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background-color: #34495e;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        .navbar h2 {
+            color: white;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .scanner-container {
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+        .scanner-container h3 {
+            margin-bottom: 20px;
+        }
+        .scan-area {
+            width: 100%;
+            height: 300px;
+            border: 2px dashed #1abc9c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            color: #1abc9c;
+        }
+        .scan-area p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h2>Inventory Management</h2>
+        <div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="stock-monitoring.html">Stock Monitoring</a>
+            <a href="barcode-scanning.html">Barcode Scanning</a>
+            <a href="batch-expiry.html">Batch/Expiry Management</a>
+        </div>
+    </nav>
+
+    <div class="scanner-container">
+        <h3>Barcode Scanning</h3>
+        <p>Scan product barcodes to update inventory quickly.</p>
+        <div class="scan-area">
+            <p>Place Barcode Here</p>
+        </div>
+        <button>Start Scanning</button>
+    </div>
+</body>
+</html>

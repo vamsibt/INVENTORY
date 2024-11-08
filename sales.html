@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales - Inventory Management</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fc;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background-color: #34495e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo h2 {
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .nav-links li a:hover {
+            background-color: #1abc9c;
+            border-radius: 5px;
+        }
+
+
+        /* Sales Layout */
+        .sales-container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Recent Sales Table */
+        .sales-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .sales-table th, .sales-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sales-table th {
+            background-color: #1abc9c;
+            color: white;
+        }
+
+        .sales-table tr:hover {
+            background-color: #ecf0f1;
+            cursor: pointer;
+        }
+
+        /* Sales Chart Container */
+        .chart-container {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        /* Quick Actions Section */
+        .quick-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .quick-actions button {
+            padding: 15px 30px;
+            background-color: #1abc9c;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            width: 200px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .quick-actions button:hover {
+            background-color: #16a085;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #34495e;
+            color: #fff;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .sales-table th, .sales-table td {
+                padding: 12px;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+
+            .quick-actions button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <h2>Inventory</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="product-list.html">Products</a></li>
+            <li><a href="add-product.html">Add Product</a></li>
+            <li><a href="sales.html">Sales</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="order-management.html">Order Management</a></li>
+            <li><a href="supplier-management.html">Supplier & Vendor</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sales Content -->
+    <div class="sales-container">
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button onclick="window.location.href='add-sale.html'">Add Sale</button>
+            <button onclick="window.location.href='generate-sales-report.html'">Generate Report</button>
+        </div>
+
+        <!-- Recent Sales Table -->
+        <table class="sales-table">
+            <thead>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="salesTableBody">
+                <!-- Sales data will be inserted here dynamically -->
+            </tbody>
+        </table>
+
+        <!-- Sales Chart -->
+        <div class="chart-container">
+            <canvas id="salesChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Inventory Management System | All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for Sales Table and Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sample sales data
+        const salesData = [
+            { id: 1, product: 'Laptop', quantity: 2, price: 500, date: '2024-11-01' },
+            { id: 2, product: 'Headphones', quantity: 5, price: 100, date: '2024-11-02' },
+            { id: 3, product: 'Chair', quantity: 1, price: 150, date: '2024-11-03' },
+            { id: 4, product: 'Table', quantity: 3, price: 250, date: '2024-11-04' }
+        ];
+
+        // Function to render sales data into the table
+        function renderSalesTable() {
+            const tableBody = document.getElementById('salesTableBody');
+            tableBody.innerHTML = ''; // Clear any existing data
+            salesData.forEach(sale => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${sale.id}</td>
+                    <td>${sale.product}</td>
+                    <td>${sale.quantity}</td>
+                    <td>$${sale.price}</td>
+                    <td>$${sale.quantity * sale.price}</td>
+                    <td>${sale.date}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Render the sales table on page load
+        renderSalesTable();
+
+        // Chart.js - Sales Chart (Total Sales Over Time)
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2024-11-01', '2024-11-02', '2024-11-03', '2024-11-04'],
+                datasets: [{
+                    label: 'Total Sales ($)',
+                    data: [1000, 500, 150, 750],  // Sample total sales data for each day
+                    fill: false,
+                    borderColor: '#1abc9c',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Sales ($)'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

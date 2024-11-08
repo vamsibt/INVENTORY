@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Inventory Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fc;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background-color: #34495e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #1abc9c;
+            bottom: 0;
+            left: 50%;
+            transition: width 0.3s, left 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: #1abc9c;
+            transform: scale(1.1);
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* Reports Page Layout */
+        .reports-container {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Report Header with Filters */
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .report-header h2 {
+            font-size: 30px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        /* Filter Dropdown */
+        .filter-dropdown {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-dropdown select {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #bdc3c7;
+            font-size: 16px;
+            color: #34495e;
+            background-color: #fff;
+            transition: border-color 0.3s;
+        }
+
+        .filter-dropdown select:focus {
+            border-color: #1abc9c;
+            outline: none;
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .chart-container {
+            width: 48%;
+            height: 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        /* Reports Table */
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .reports-table th, .reports-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .reports-table th {
+            background-color: #1abc9c;
+            color: white;
+        }
+
+        .reports-table tr:hover {
+            background-color: #ecf0f1;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #34495e;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <h2>Inventory</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="product-list.html">Products</a></li>
+            <li><a href="add-product.html">Add Product</a></li>
+            <li><a href="sales.html">Sales</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="order-management.html">Order Management</a></li>
+            <li><a href="supplier-management.html">Supplier & Vendor</a></li>
+        </ul>
+    </nav>
+
+    <!-- Reports Content -->
+    <div class="reports-container">
+        <!-- Report Header with Filters -->
+        <div class="report-header">
+            <h2>Inventory Reports</h2>
+            <div class="filter-dropdown">
+                <select id="categoryFilter">
+                    <option value="">Select Category</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Others">Others</option>
+                </select>
+                <select id="dateFilter">
+                    <option value="">Select Date Range</option>
+                    <option value="This Week">This Week</option>
+                    <option value="This Month">This Month</option>
+                    <option value="This Year">This Year</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-container">
+            <div class="chart-container">
+                <canvas id="salesChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="stockChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Reports Table -->
+        <table class="reports-table" id="reportsTable">
+            <thead>
+                <tr>
+                    <th>Report ID</th>
+                    <th>Category</th>
+                    <th>Total Sales</th>
+                    <th>Inventory Value</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="reportsTableBody">
+                <!-- Reports data will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Inventory Management System | All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for Dynamic Filtering and Chart Visualization -->
+    <script>
+        // Sample reports data
+        const reportData = [
+            { id: 1, category: 'Electronics', sales: 1200, inventoryValue: 5000, date: '2024-11-01' },
+            { id: 2, category: 'Clothing', sales: 800, inventoryValue: 3000, date: '2024-11-02' },
+            { id: 3, category: 'Furniture', sales: 1500, inventoryValue: 7000, date: '2024-11-03' },
+            { id: 4, category: 'Electronics', sales: 600, inventoryValue: 2500, date: '2024-11-05' },
+            { id: 5, category: 'Furniture', sales: 1100, inventoryValue: 4200, date: '2024-11-06' },
+            { id: 6, category: 'Clothing', sales: 500, inventoryValue: 1500, date: '2024-11-07' }
+        ];
+
+        // Function to render reports data into the table
+        function renderReportsTable(filteredData) {
+            const tableBody = document.getElementById('reportsTableBody');
+            tableBody.innerHTML = ''; // Clear existing data
+            filteredData.forEach(report => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${report.id}</td>
+                    <td>${report.category}</td>
+                    <td>${report.sales}</td>
+                    <td>${report.inventoryValue}</td>
+                    <td>${report.date}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Chart rendering function
+        function renderCharts(filteredData) {
+            const salesData = filteredData.map(report => report.sales);
+            const stockData = filteredData.map(report => report.inventoryValue);
+            const categories = filteredData.map(report => report.category);
+
+            // Sales Chart
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            const salesChart = new Chart(salesCtx, {
+                type: 'bar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Sales',
+                        data: salesData,
+                        backgroundColor: 'rgba(26, 188, 156, 0.2)',
+                        borderColor: 'rgba(26, 188, 156, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            });
+
+            // Stock Chart
+            const stockCtx = document.getElementById('stockChart').getContext('2d');
+            const stockChart = new Chart(stockCtx, {
+                type: 'pie',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Stock Value',
+                        data: stockData,
+                        backgroundColor: ['#1abc9c', '#3498db', '#e74c3c', '#9b59b6', '#f39c12'],
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+
+        // Filter function to update reports table and charts
+        function filterReports() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            // Filter the data based on category and date range
+            let filteredData = reportData;
+            if (categoryFilter) {
+                filteredData = filteredData.filter(report => report.category === categoryFilter);
+            }
+            if (dateFilter) {
+                const today = new Date();
+                const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7); // Last week
+                filteredData = filteredData.filter(report => {
+                    const reportDate = new Date(report.date);
+                    if (dateFilter === 'This Week' && reportDate >= startDate) {
+                        return true;
+                    }
+                    if (dateFilter === 'This Month' && reportDate.getMonth() === today.getMonth()) {
+                        return true;
+                    }
+                    if (dateFilter === 'This Year' && reportDate.getFullYear() === today.getFullYear()) {
+                        return true;
+                    }
+                    return false;
+                });
+            }
+
+            renderReportsTable(filteredData);
+            renderCharts(filteredData);
+        }
+
+        // Event listeners for filters
+        document.getElementById('categoryFilter').addEventListener('change', filterReports);
+        document.getElementById('dateFilter').addEventListener('change', filterReports);
+
+        // Initial render
+        renderReportsTable(reportData);
+        renderCharts(reportData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Monitoring - Inventory Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background-color: #f8fafc;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background-color: #34495e;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        .navbar h2 {
+            color: white;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-weight: bold;
+        }
+        .stock-table-container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .stock-table thead {
+            background-color: #1abc9c;
+            color: white;
+        }
+        .stock-table th, .stock-table td {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            text-align: left;
+        }
+        .low-stock {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h2>Inventory Management</h2>
+        <div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="stock-monitoring.html">Stock Monitoring</a>
+            <a href="barcode-scanning.html">Barcode Scanning</a>
+            <a href="batch-expiry.html">Batch/Expiry Management</a>
+        </div>
+    </nav>
+
+    <div class="stock-table-container">
+        <h3>Stock Monitoring</h3>
+        <p>View current stock levels and identify items low in stock.</p>
+        <table class="stock-table">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th>Stock Level</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Product 1</td>
+                    <td>SKU001</td>
+                    <td>Electronics</td>
+                    <td>50</td>
+                    <td>In Stock</td>
+                </tr>
+                <tr class="low-stock">
+                    <td>Product 2</td>
+                    <td>SKU002</td>
+                    <td>Furniture</td>
+                    <td>5</td>
+                    <td>Low Stock</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

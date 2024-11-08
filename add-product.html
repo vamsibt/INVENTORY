@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Inventory Management</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background-color: #34495e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo h2 {
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .nav-links li a:hover {
+            background-color: #1abc9c;
+            border-radius: 5px;
+        }
+
+
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .form-container label {
+            font-weight: bold;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .form-container button {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-container button:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            <h2>Inventory</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="product-list.html">Products</a></li>
+            <li><a href="add-product.html">Add Product</a></li>
+            <li><a href="sales.html">Sales</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="order-management.html">Order Management</a></li>
+            <li><a href="supplier-management.html">Supplier & Vendor</a></li>
+        </ul>
+    </nav>
+
+    <!-- Add Product Form -->
+    <div class="form-container">
+        <h2>Add Product</h2>
+        <form id="addProductForm" onsubmit="return validateForm()">
+            <label for="productName">Product Name</label>
+            <input type="text" id="productName" name="productName" placeholder="Enter product name" required>
+
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                <option value="">Select category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" placeholder="Enter price" required>
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
+
+            <label for="description">Description</label>
+            <textarea type="text", id="description" name="description" rows="4" placeholder="Enter product description" required></textarea>
+
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Inventory Management System | All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for Form Validation and Adding Product -->
+    <script>
+        // Validate form inputs and send data to backend
+        async function validateForm() {
+            const productName = document.getElementById('productName').value.trim();
+            const price = document.getElementById('price').value;
+            const quantity = document.getElementById('quantity').value;
+
+            // Basic validation
+            if (!productName || !price || !quantity) {
+                alert("Please fill out all required fields.");
+                return false;
+            }
+
+            if (price <= 0 || quantity <= 0) {
+                alert("Price and Quantity must be positive numbers.");
+                return false;
+            }
+
+            // Create product object
+            const product = {
+                productName: productName,
+                category: document.getElementById('category').value,
+                price: parseFloat(price),
+                quantity: parseInt(quantity),
+                description: document.getElementById('description').value
+            };
+
+            // Send the product data to the backend
+            try {
+                const response = await fetch('http://localhost:5000/api/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(product)
+                });
+
+                const result = await response.json();
+                
+                if (response.status === 201) {
+                    alert(result.message);  // Show success message
+                } else {
+                    alert(result.error);  // Show error message
+                }
+
+                // Reset the form after submission
+                document.getElementById('addProductForm').reset();
+
+            } catch (error) {
+                alert("Failed to add product. Please try again.");
+                console.error('Error adding product:', error);
+            }
+
+            return false;  // Prevent form submission
+        }
+    </script>
+</body>
+</html>
